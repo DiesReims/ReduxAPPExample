@@ -1,0 +1,39 @@
+
+<ion-header>
+    <ion-navbar>
+      <ion-title>Login</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+
+<ion-content ion-card-background>
+  <ion-card>
+    <ion-card-title>
+      Bienvenido a Redux App 2
+    </ion-card-title>
+    <ion-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin2()">
+        <ion-list>
+            <ion-item>
+                <ion-label stacked>Username</ion-label>
+                <ion-input type="text" formControlName="usuario"></ion-input>
+            </ion-item>
+            <ion-label *ngIf="loginForm.controls['usuario'].hasError('required') && loginForm.dirty" color="danger">El usuario es requeridos</ion-label>
+            <ion-label *ngIf="loginForm.controls['usuario'].hasError('maxLength') && loginForm.dirty" color="danger">Usuario muy largo</ion-label>            
+            <ion-item>
+                <ion-label stacked>Password</ion-label>
+                <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+        </ion-list>
+        <button ion-button [disabled]="!loginForm.valid">Iniciar Sesión</button>
+        <button ion-button type="button" color="dark">Cancelar</button>
+      </form>
+      <ion-chip>
+        <ion-icon name="send"></ion-icon>
+        <ion-label>
+          Información: {{loginForm.value | json}}
+        </ion-label>
+      </ion-chip>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
