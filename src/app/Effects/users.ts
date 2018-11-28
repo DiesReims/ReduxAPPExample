@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { UserApiService } from "../Services";
 import { Actions, Effect } from "@ngrx/effects";
 import { Action } from "@ngrx/store";
-import { LOG_USER, logUserOk, logUserError } from "../Actions/user";
+import { LOG_USER, logUserOk, logUserError, logUser } from "../Actions/user";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operator/map";
 
@@ -19,8 +19,8 @@ export class UsersEffects{
    //Envia la solicitud cuando LOG_USER es despachado.
    .ofType(LOG_USER)
    //Envia la solicitud a la API.
-   .switchMap((data)=>{
-       return this._userApiService.logUser(data)
+   .switchMap((data: logUser)=>{
+       return this._userApiService.logUser(data.payload)
        //Si la solicitud es satisfactoria llamamos  la logUserOk con el usuario retornado.
        .map(userData => new logUserOk(userData))
        //Algo fue mal con la solicitud.

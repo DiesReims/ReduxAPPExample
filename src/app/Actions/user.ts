@@ -16,7 +16,7 @@ export const LOG_USER_ERROR = 'LOG_USER_ERROR';
 */
 export class logUser implements Action{
     readonly type = LOG_USER;
-    constructor(public payload?: any){}
+    constructor(public payload: any){}
 }
 
 //Acción que se ejecuta si el proceso fue correcto.

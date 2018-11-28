@@ -9,8 +9,8 @@ export class UserApiService{
     constructor(private _http: Http) {
     }
 
-    public logUser(_usuario: User) {
-        let _userV = JSON.stringify(_usuario);
+    public logUser(payload: any) {
+        let _userV = JSON.stringify(payload);
         console.log(_userV)
         //Data.Message contiene los datos del usuario.
         return this._http.post(API_URL, _userV)
