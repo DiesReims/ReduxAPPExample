@@ -20,7 +20,7 @@ export class UsersEffects{
    .ofType(LOG_USER)
    //Envia la solicitud a la API.
    .switchMap((data)=>{
-       return this._userApiService.logUser(data.payload)
+       return this._userApiService.logUser(data)
        //Si la solicitud es satisfactoria llamamos  la logUserOk con el usuario retornado.
        .map(userData => new logUserOk(userData))
        //Algo fue mal con la solicitud.
