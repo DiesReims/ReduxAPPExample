@@ -2,7 +2,7 @@ import { User } from "../Data/Entity/user";
 import * as fromuserActions from '../Actions/user';
 
 //Creamos el store especifico de usuario con sus datos.
-export interface State{
+export interface State {
     isLoading: boolean,
     isLogged: boolean,
     currentUser: User
@@ -16,10 +16,10 @@ export const initialState: State = {
 }
 
 //Creamos nuestro reducer que poseerá 2 params: Estado y Acción.
-export function reducer(state: State = initialState, action: fromuserActions.Action){
-    switch (action.type){
+export function reducer(state: State = initialState, action: fromuserActions.Action) {
+    switch (action.type) {
 
-        case fromuserActions.LOG_USER:{
+        case fromuserActions.LOG_USER: {
             /*Como estado arriba nosotros crearemos un nuevo estado.
             * Pondremos el usuario logeado en las propiedades.
             * Retornamos siempre un nuevo estado.
@@ -37,9 +37,9 @@ export function reducer(state: State = initialState, action: fromuserActions.Act
             //Entonces actualizamos el estado generando un nuevo estado con el usuario.
             const newUser = action.payload;
             //Retornamos siempre un nuevo estado.
-            return{
+            return {
                 currentUser: newUser,
-                //Petición realizada ya no hay más.
+                //Petición realizada, se marca como completada.
                 isLoading: false,
                 //Indicamos que se logeo correctamente.
                 isLogged: true
@@ -52,8 +52,8 @@ export function reducer(state: State = initialState, action: fromuserActions.Act
                 isLoading: false
             }
         }
-        
+
         default:
-        return state;
-    } 
+            return state;
+    }
 }

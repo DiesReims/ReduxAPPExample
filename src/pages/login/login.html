@@ -1,7 +1,7 @@
 
 <ion-header>
     <ion-navbar>
-      <ion-title>Login</ion-title>
+      <ion-title>Redux App-2</ion-title>
     </ion-navbar>
   </ion-header>
 
@@ -9,24 +9,34 @@
 <ion-content ion-card-background>
   <ion-card>
     <ion-card-title>
-      Bienvenido a Redux App 2
+      Inicio de sesión
     </ion-card-title>
     <ion-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onLogin2()">
+        <ion-avatar>
+          <img class="item-avatar" src="data:image/png;base64,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">
+        </ion-avatar>
         <ion-list>
             <ion-item>
                 <ion-label stacked>Username</ion-label>
                 <ion-input type="text" formControlName="usuario"></ion-input>
             </ion-item>
-            <ion-label *ngIf="loginForm.controls['usuario'].hasError('required') && loginForm.dirty" color="danger">El usuario es requeridos</ion-label>
-            <ion-label *ngIf="loginForm.controls['usuario'].hasError('maxLength') && loginForm.dirty" color="danger">Usuario muy largo</ion-label>            
+            <div *ngIf="this.loginForm.controls['usuario'].dirty">
+                <ion-label *ngIf="loginForm.controls['usuario'].hasError('required')" color="danger">El usuario es requerido</ion-label>
+                <ion-label *ngIf="loginForm.controls['usuario'].hasError('maxlength')" color="danger">El usuario es demasiado largo</ion-label>  
+            </div>          
             <ion-item>
                 <ion-label stacked>Password</ion-label>
                 <ion-input type="password" formControlName="password"></ion-input>
             </ion-item>
+            <div *ngIf="this.loginForm.controls['password'].dirty">
+                <ion-label *ngIf="loginForm.controls['password'].hasError('required')" color="danger">El password es requerido</ion-label>
+                <ion-label *ngIf="loginForm.controls['password'].hasError('maxlength')" color="danger">El password es demasiado largo</ion-label>  
+            </div>
         </ion-list>
-        <button ion-button [disabled]="!loginForm.valid">Iniciar Sesión</button>
-        <button ion-button type="button" color="dark">Cancelar</button>
+        <button ion-button [disabled]="!loginForm.valid" block>Iniciar Sesión</button>
+        <!--Este botón se asogna con type button, debido a que sino al presionarlo ejecuta el evento de OnSubmit()-->
+        <button ion-button type="button" color="dark" (click)="onCancelClicked()" block>Cancelar</button>
       </form>
       <ion-chip>
         <ion-icon name="send"></ion-icon>

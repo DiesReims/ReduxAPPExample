@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Http, Headers } from "@angular/http";
-import { User } from "../Data/Entity/user";
 
 const API_URL = 'http://localhost:39159/api/User';
 
