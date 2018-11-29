@@ -7,38 +7,38 @@ export const LOG_USER_OK = 'LOG_USER_OK';
 export const LOG_USER_ERROR = 'LOG_USER_ERROR';
 
 /*Cada acción tiene su información que tiene 2 propiedades:
-* Tipo: Es el tipo de la acción.
-* Payload: Carga de información puede ser cualquier cosa.
+* Tipo: Es el tipo de la acción (Es un String).
+* Payload: Carga de información puede ser cualquier cosa (Cualquier tipo).
 */
 
-/*Ocupamos la interfaz Actions que solo forza a ocupar las dos propiedades.
-*Configuramos cada Acción cons sus parametros y valores de retorno.
-*/
+//Implementamos la interfaz "Actions" para forzar las dos propiedades.
+
+
+//Acción que desencadena la llamada a web service de logeo.
 export class logUser implements Action{
-    readonly type = LOG_USER;
-    constructor(public payload: any){}
+    readonly type = LOG_USER; //Tipo
+    constructor(public payload: any){}//Recibe el payload (En este caso cualquier cosa).
 }
 
-//Acción que se ejecuta si el proceso fue correcto.
-export class logUserOk implements Action{
-    //Definimos el payload a regresar.
-    payload: User
-    readonly type = LOG_USER_OK;
+//Acción que se ejecuta si el proceso fue correcto. (Web Service respondió)
+export class logUserOk implements Action{  
+    readonly type = LOG_USER_OK; //Tipo
+    payload: User //Definimos el tipo de la propiedad payload a regresar.
     constructor(_user: any){
         this.payload = _user;
     }
 }
 
-//Acción que se ejecuta si el usuario fue incorrecto.
+//Acción que se ejecuta si el usuario fue incorrecto. (Web Service devolvió error)
 export class logUserError implements Action{
-    payload: {error: any}
-    readonly type = LOG_USER_ERROR;
+    readonly type = LOG_USER_ERROR; //Tipo
+    payload: {error: any} //Definimos el tipo de payload, un objeto con la propiedad error de cualquier tipo.
     constructor (error: any){
         this.payload = {error};
     }
 }
 
-/*Exportamos el tipo Acción que contiene todas las acciones del archivo.
+/*Exportamos el tipo "Action" que equivale y/o contiene todas las acciones del archivo.
 *Esto es util para el checado de tipos en los reducers.
 */
 export type Action = logUser | logUserOk | logUserError;

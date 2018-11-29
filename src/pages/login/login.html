@@ -35,9 +35,10 @@
             </div>
         </ion-list>
         <button ion-button [disabled]="!loginForm.valid" block>Iniciar Sesión</button>
-        <!--Este botón se asogna con type button, debido a que sino al presionarlo ejecuta el evento de OnSubmit()-->
+        <!--Este botón se asigna con type "button", debido a que sino al presionarlo ejecuta el evento de OnSubmit()-->
         <button ion-button type="button" color="dark" (click)="onCancelClicked()" block>Cancelar</button>
       </form>
+      <!--Esta sección del HTML muestra los valores del formulario (Para depuración)-->
       <ion-chip>
         <ion-icon name="send"></ion-icon>
         <ion-label>

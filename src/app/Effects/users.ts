@@ -7,22 +7,26 @@ import { Observable } from "rxjs";
 
 @Injectable()
 export class UsersEffects{
-    //Inyectamos los servicios requeridos.
-    constructor(private actions$: Actions, private _userApiService: UserApiService){}
 
-    /*La acción retornada es automaticamente despachada a el store cuando
-    * por ngrx/effects.
+    //Constructor de la clase UserEffects.
+    constructor(private actions$: Actions, private _userApiService: UserApiService){} //Inyectamos los servicios requeridos (Actions de ngrxEffects & Nuestro servicio de usuarios).
+   
+    /*Definimos un Effect llamado "logUser$" con la ($) por que es de tipo Observable<Action> 
+    Indica que cuando se llame un Action de tipo (LOG_USER), procesará la acción de llamar al provider de usuario y procesará la acción.
+    Si todo es correcto retornará una acción de tipo LOG_USER_OK pasandole la información recibida (EL usuario retornado por el web service).
+    Si ocurre un error mediante el catch con Observable.Of() enviaremos un observable con los valores indicados y finalmente una notificación de completado.
+    Pasamos como parametro una acción de tipo LOG_USER_ERROR enviandole el error recibido. 
+    por ngrx/effects.
     */
    @Effect()
    logUser$: Observable<Action> = this.actions$
-   //Envia la solicitud cuando LOG_USER es despachado.
-   .ofType(LOG_USER)
-   //Envia la solicitud a la API.
+   .ofType(LOG_USER) //Interceptamos una acción de tipo (LOG_USER)
    .switchMap((data: logUser)=>{
+       //Llamamos el método de nuestro provider encargado de logear al usuario.
        return this._userApiService.logUser(data.payload)
        //Si la solicitud es satisfactoria llamamos  la logUserOk con el usuario retornado.
        .map(userData => new logUserOk(userData))
-       //Algo fue mal con la solicitud.
+       //Algo fue mal con la solicitud retornamos una acción con el error obtenido.
        .catch(err => Observable.of(new logUserError(err)))
    })
 
