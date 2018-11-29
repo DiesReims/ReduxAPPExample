@@ -4,7 +4,6 @@ import { Actions, Effect } from "@ngrx/effects";
 import { Action } from "@ngrx/store";
 import { LOG_USER, logUserOk, logUserError, logUser } from "../Actions/user";
 import { Observable } from "rxjs";
-import { map } from "rxjs/operator/map";
 
 @Injectable()
 export class UsersEffects{

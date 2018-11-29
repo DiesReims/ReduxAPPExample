@@ -72,7 +72,8 @@ export class LoginPage {
     //Cargamos los datos del formulario
     //this.loaderCreation();
     const formData = this.loginForm.value;
-    const loginData: User = this.loginForm.value;
+    let loginData: User;
+    loginData = {Id: 0,StrUsuario: formData.usuario, StrPassword: formData.password, permisos: []};
     //Llamamos nuestro evento.
     this._store.dispatch(new fromUsersActions.logUser(loginData));
     this.isLogged$.finally(()=>{

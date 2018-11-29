@@ -24,7 +24,7 @@ export class logUserOk implements Action{
     //Definimos el payload a regresar.
     payload: User
     readonly type = LOG_USER_OK;
-    constructor(_user: User){
+    constructor(_user: any){
         this.payload = _user;
     }
 }
