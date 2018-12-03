@@ -1,0 +1,83 @@
+<!--
+  Generated template for the PersonaManagerPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Persona</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-title>
+      <ion-icon name="people"></ion-icon>
+      <strong>Persona</strong>
+      <p>Modo 
+          <span *ngIf="TipoAccion === 1">AGREGAR</span>
+          <span *ngIf="TipoAccion === 2">EDITAR</span>
+      </p>
+    </ion-card-title>
+    <ion-card-content>
+      <form [formGroup]="personaForm">
+        <ion-item>
+          <ion-label stacked>
+            Nombre Persona
+          </ion-label>
+          <ion-input type="text" formControlName="nombre">
+          </ion-input>
+        </ion-item>
+        <div *ngIf="this.personaForm.controls['nombre'].dirty">
+            <ion-label *ngIf="personaForm.controls['nombre'].hasError('required')" color="danger">El nombre es requerido</ion-label>
+            <ion-label *ngIf="personaForm.controls['nombre'].hasError('maxlength')" color="danger">El nombre es demasiado largo</ion-label>  
+        </div> 
+        <ion-item>
+          <ion-label stacked>
+            Apellido Paterno
+          </ion-label>
+          <ion-input type="text" formControlName="aPaterno">
+          </ion-input>
+        </ion-item>
+        <div *ngIf="this.personaForm.controls['aPaterno'].dirty">
+            <ion-label *ngIf="personaForm.controls['aPaterno'].hasError('required')" color="danger">El A. Paterno es requerido</ion-label>
+            <ion-label *ngIf="personaForm.controls['aPaterno'].hasError('maxlength')" color="danger">El A. Paterno es demasiado largo</ion-label>  
+        </div> 
+        <ion-item>
+          <ion-label stacked>
+            Apellido Materno
+          </ion-label>
+            <ion-input type="text" formControlName="aMaterno">
+            </ion-input>
+          </ion-item>
+          <div *ngIf="this.personaForm.controls['aMaterno'].dirty">
+              <ion-label *ngIf="personaForm.controls['aMaterno'].hasError('required')" color="danger">El A. Materno es requerido</ion-label>
+              <ion-label *ngIf="personaForm.controls['aMaterno'].hasError('maxlength')" color="danger">El A. Materno es demasiado largo</ion-label>  
+          </div>
+          <ion-item>
+            <ion-label stacked>Fecha de Nacimiento</ion-label>
+            <ion-datetime formControlName="dteFechaNac"></ion-datetime>
+          </ion-item>
+          <div *ngIf="this.personaForm.controls['dteFechaNac'].dirty">
+              <ion-label *ngIf="personaForm.controls['dteFechaNac'].hasError('required')" color="danger">La fecha de nacimiento es obigatoria.</ion-label>
+              <ion-label *ngIf="personaForm.controls['dteFechaNac'].hasError('min')" color="danger">La fecha de nacimiento no puede ser menor</ion-label>  
+          </div>
+          <ion-item>
+            <ion-label stacked>Nacionalidad</ion-label>
+            <ion-select>
+              <ion-option *ngFor="let nac of this.Nacionalidad" value="nac">
+                {{nac}}
+              </ion-option>
+            </ion-select>
+          </ion-item>
+          <button ion-button block [disabled]="!personaForm.valid">Aceptar</button>
+          <button ion-button type="button" block color="dark">Cancelar</button>
+      </form>
+      <p>{{personaForm.value | json}}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

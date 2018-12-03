@@ -15,13 +15,18 @@ import { EffectsModule } from '@ngrx/effects';
 import { UsersEffects } from './Effects/users';
 import { UserApiService } from './Services';
 import { HttpModule } from '@angular/http';
+import { PersonaPage } from '../pages/persona/persona';
+import { PersonaManagerPage } from '../pages/persona-manager/persona-manager';
+import { ControlAlertProvider } from '../providers/control-alert/control-alert';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ListPage,
-    LoginPage
+    LoginPage,
+    PersonaPage,
+    PersonaManagerPage
   ],
   imports: [
     BrowserModule,
@@ -35,13 +40,16 @@ import { HttpModule } from '@angular/http';
     MyApp,
     HomePage,
     ListPage,
-    LoginPage
+    LoginPage,
+    PersonaPage,
+    PersonaManagerPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     UserApiService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ControlAlertProvider
   ]
 })
 export class AppModule {}
