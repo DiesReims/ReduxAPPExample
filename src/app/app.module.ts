@@ -19,7 +19,7 @@ import { PersonaPage } from '../pages/persona/persona';
 import { PersonaManagerPage } from '../pages/persona-manager/persona-manager';
 import { ControlAlertProvider } from '../providers/control-alert/control-alert';
 import { PersonaServiceProvider } from '../providers/persona-service/persona-service';
-import { ServerResourceProvider } from '../providers/server-resource/server-resource';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -33,6 +33,7 @@ import { ServerResourceProvider } from '../providers/server-resource/server-reso
   imports: [
     BrowserModule,
     HttpModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     EffectsModule.forRoot([UsersEffects]),
     StoreModule.forRoot(reducers, {metaReducers})
@@ -53,7 +54,6 @@ import { ServerResourceProvider } from '../providers/server-resource/server-reso
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ControlAlertProvider,
     PersonaServiceProvider,
-    ServerResourceProvider
   ]
 })
 export class AppModule {}

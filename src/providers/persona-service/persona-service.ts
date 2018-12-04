@@ -14,12 +14,12 @@ export class PersonaServiceProvider implements iService<WsPersonaContract>{
   }
 
   getAll(): Observable<WsPersonaContract> {
-
-    return this.http.get(URL_SERVER, { headers: { 'Content-Type': 'application/json', 'Authorization': 'token12345' }}).map(data => data as WsPersonaContract);
+    return this.http.get(URL_SERVER + 'persona/', { headers: { 'Content-Type': 'application/json', 'Authorization': 'token12345' }}).map(data => data as WsPersonaContract);
   }
 
   getById(_Data: WsPersonaContract): Observable<WsPersonaContract> {
-    throw new Error("Method not implemented.");
+    return this.http.get(URL_SERVER + "/" + _Data.Entity.Id)
+    .map(data => data as WsPersonaContract);
   }
   postEntity(_Data: WsPersonaContract): Observable<WsPersonaContract> {
     throw new Error("Method not implemented.");

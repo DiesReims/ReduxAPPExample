@@ -6,6 +6,7 @@ import { Persona } from '../../app/Data/Entity/persona';
 import { EnumTipoAccion } from '../../app/Data/Enums/enumTipoAccion';
 import { EnumResetForm } from '../../app/Data/Enums/enumResetForm';
 import { ControlAlertProvider } from '../../providers/control-alert/control-alert';
+import { PersonaServiceProvider } from '../../providers/persona-service/persona-service';
 
 /**
  * Generated class for the PersonaManagerPage page.
@@ -32,7 +33,7 @@ export class PersonaManagerPage implements iPageManager<Persona> {
     mode: 'md'
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private fB: FormBuilder, private toastCtrl: ToastController, private alertCtrl: ControlAlertProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private fB: FormBuilder, private toastCtrl: ToastController, private alertCtrl: ControlAlertProvider, private personaServ: PersonaServiceProvider) {
     this.TipoAccion = EnumTipoAccion.AGREGAR;
     this.personaForm = this.fB.group({
       'nombre': ['', [Validators.required, Validators.maxLength(50)]],
