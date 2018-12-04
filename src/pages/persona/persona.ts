@@ -21,7 +21,7 @@ export class PersonaPage implements iPage<Persona> {
 
   loadData(): void {
     console.log('Cargando datos del formulario');
-    this.BaseEntityList = [{Id:1,StrNombre:'Diego A.',StrAPaterno:'Zárate',StrAMaterno:'Lara', DteFechaNac: Date.now(), IdNacionalidad:1,picImage:''}];
+    this.BaseEntityList = [{Id:1,StrNombre:'Diego A.',StrAPaterno:'Zárate',StrAMaterno:'Lara', DteFechaNac: new Date, IdNacionalidad:1,picImage:''}];
   }
 
   onAddClick(data: Persona): void {

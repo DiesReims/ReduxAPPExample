@@ -18,6 +18,8 @@ import { HttpModule } from '@angular/http';
 import { PersonaPage } from '../pages/persona/persona';
 import { PersonaManagerPage } from '../pages/persona-manager/persona-manager';
 import { ControlAlertProvider } from '../providers/control-alert/control-alert';
+import { PersonaServiceProvider } from '../providers/persona-service/persona-service';
+import { ServerResourceProvider } from '../providers/server-resource/server-resource';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { ControlAlertProvider } from '../providers/control-alert/control-alert';
     SplashScreen,
     UserApiService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ControlAlertProvider
+    ControlAlertProvider,
+    PersonaServiceProvider,
+    ServerResourceProvider
   ]
 })
 export class AppModule {}

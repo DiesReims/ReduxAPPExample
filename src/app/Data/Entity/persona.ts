@@ -4,7 +4,7 @@ export interface Persona{
     StrNombre:string;
     StrAPaterno: string;
     StrAMaterno: string;
-    DteFechaNac: number;
+    DteFechaNac: Date;
     IdNacionalidad: Number;
     picImage: string;
 
