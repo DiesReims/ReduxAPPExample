@@ -7,5 +7,4 @@ export interface Persona{
     DteFechaNac: Date;
     IdNacionalidad: Number;
     picImage: string;
-
 }

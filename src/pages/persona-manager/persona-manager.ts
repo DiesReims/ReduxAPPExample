@@ -7,6 +7,7 @@ import { EnumTipoAccion } from '../../app/Data/Enums/enumTipoAccion';
 import { EnumResetForm } from '../../app/Data/Enums/enumResetForm';
 import { ControlAlertProvider } from '../../providers/control-alert/control-alert';
 import { PersonaServiceProvider } from '../../providers/persona-service/persona-service';
+import { WsPersonaContract } from '../../app/Data/Entity/contracts/wsPersonaContract';
 
 /**
  * Generated class for the PersonaManagerPage page.
@@ -55,7 +56,7 @@ export class PersonaManagerPage implements iPageManager<Persona> {
       StrAPaterno: _Data.aPaterno,
       StrAMaterno: _Data.aMaterno,
       IdNacionalidad: _Data.idNacionalidad,
-      DteFechaNac: _Data.dteFechaNac,
+      DteFechaNac: new Date(_Data.dteFechaNac),
       picImage: ''
     }
     if (!this.validationData(this.BaseEntity)) {
@@ -63,6 +64,18 @@ export class PersonaManagerPage implements iPageManager<Persona> {
       return;
     }
     //Llamada a web service para guardar.
+    let contract = new WsPersonaContract();
+    contract.Entity = this.BaseEntity;
+    let contractResolve$ = this.personaServ.postEntity(contract);
+    contractResolve$.subscribe(data => {
+      if (data.StatusCode === -1 || data.StatusCode === 1){
+        this.createToast('Ha ocurrido un error, intentelo más tarde.');
+      }
+      else{
+        this.createToast('Se ha registrado con éxito la persona');
+        this.navCtrl.pop();
+      }
+    });
   }
 
   validationData(_Data: Persona): Boolean {

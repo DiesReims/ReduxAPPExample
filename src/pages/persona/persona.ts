@@ -5,7 +5,7 @@ import { Persona } from '../../app/Data/Entity/persona';
 import { ControlAlertProvider } from '../../providers/control-alert/control-alert';
 import { PersonaManagerPage } from '../persona-manager/persona-manager';
 import { PersonaServiceProvider } from '../../providers/persona-service/persona-service';
-import { HomePage } from '../home/home';
+import { WsPersonaContract } from '../../app/Data/Entity/contracts/wsPersonaContract';
 
 @IonicPage()
 @Component({
@@ -16,26 +16,32 @@ export class PersonaPage implements iPage<Persona> {
 
   BaseEntityList: Persona[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: ControlAlertProvider,private toastCtrl: ToastController ,private personaServ: PersonaServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: ControlAlertProvider, private toastCtrl: ToastController, private personaServ: PersonaServiceProvider) {
     console.log("Constructor por defecto");
+    this.loadData();
+  }
+
+  public ionViewDidLoad(){
+    this.loadData();
+  }
+  public ionViewWillEnter(){
     this.loadData();
   }
 
   loadData(): void {
     console.log('Cargando datos del formulario');
-    this.BaseEntityList = [{Id:1,StrNombre:'Diego A.',StrAPaterno:'Zárate',StrAMaterno:'Lara', DteFechaNac: new Date, IdNacionalidad:1,picImage:''}];
+    this.BaseEntityList = [{ Id: 1, StrNombre: 'Diego A.', StrAPaterno: 'Zárate', StrAMaterno: 'Lara', DteFechaNac: new Date, IdNacionalidad: 1, picImage: '' }];
     let resCllBck$ = this.personaServ.getAll();
     resCllBck$.subscribe(data => {
       this.BaseEntityList = data.EntityList;
     },
-    _err =>{
-      this.createToast('Ha ocurrido un error al cargar los datos');
-    }
+      _err => {
+        this.createToast('Ha ocurrido un error al cargar los datos');
+      }
     );
   }
 
   onAddClick(data: Persona): void {
-    //this.alertCtrl.showBasicAlert('Información','Agregar con:' + data.StrNombre);
     this.navCtrl.push(PersonaManagerPage);
   }
 
@@ -44,22 +50,30 @@ export class PersonaPage implements iPage<Persona> {
   }
 
   onDeleteClick(data: Persona): void {
-    const res = this.alertCtrl.showConfirmAlert('Información','¿Deseas eliminar: ' + data.StrNombre + '?');
-    res.then(data => {
-      if(data){
-        //Eliminar registro
+    const res = this.alertCtrl.showConfirmAlert('Información', '¿Deseas eliminar: ' + data.StrNombre + '?');
+    res.then(confirm => {
+      if (confirm) {
+        let resolveDelete$ = this.personaServ.deleteEntity(data.Id);
+        resolveDelete$.subscribe(data => {
+          if (data.StatusCode === -1 || data.StatusCode === 1) {
+            this.createToast(data.Message);
+          }
+          else {
+            this.createToast('Se ha eliminado de forma satisfactoria.');
+            this.loadData();
+          }
+        })
       }
-      else{
-        //Omitir borrado.
+      else {
+        //Se debe omitir el borrado.
       }
-      console.log("Se ha determinado," + data);
     });
   }
 
-  private createToast(_mess:string){
+  private createToast(_mess: string) {
     const toast = this.toastCtrl.create({
       message: _mess,
-      duration:1500
+      duration: 1500
     });
     toast.present();
   }
