@@ -1,5 +1,6 @@
 import { User } from "../Data/Entity/user";
 import * as fromuserActions from '../Actions/user';
+import { WsUserContract } from "../Data/Entity/contracts/wsUserContract";
 
 //Declaramos los datos que poseerá el Store (Sección de usuario)
 export interface State {

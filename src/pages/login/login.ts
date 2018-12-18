@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { User } from '../../app/Data/Entity/user';
 import * as fromUsersActions from '../../app/Actions/user';
 import { HomePage } from '../home/home';
+import { WsUserContract } from '../../app/Data/Entity/contracts/wsUserContract';
 
 @IonicPage()
 @Component({
@@ -73,18 +74,28 @@ export class LoginPage {
       console.log(val); //Verificamos el valor de la variable isLoading$
     })
     const formData = this.loginForm.value; //Obtenemos los valores del formulario.
-    let loginData: User = {Id: 0,StrUsuario: formData.usuario, StrPassword: formData.password, permisos: []}; //Inicializamos un objeto de tipo User (Interface).
-    this._store.dispatch(new fromUsersActions.logUser(loginData));//Despachamos la acción logUser() encargada de logear los valores del formulario.
+    let loginData: User = {Id: 0,StrUsuario: formData.usuario, StrPassword: formData.password,StrToken:'', permisos: []}; //Inicializamos un objeto de tipo User (Interface).
+    let contract = new WsUserContract();
+    contract.Entity = loginData;
+    this._store.dispatch(new fromUsersActions.logUser(contract));//Despachamos la acción logUser() encargada de logear los valores del formulario.
     this.isLogged$.finally(()=>{
       //.finally() es llamado antes del subscribe y se utiliza para ejecutar código después de la llamada.
     }).subscribe(data => {
       if(data){
-        //Si el valor de isLogged$ es true: Inicio de sesión correcto.
-        this.navCtrl.setRoot(HomePage);
+        this.currentUser$.subscribe(user => {
+          if (user){
+          //Si el valor de isLogged$ es true: Inicio de sesión correcto.
+          this.navCtrl.setRoot(HomePage);
+          }
+          else{
+          //Si el valor de inicio de sesión es incorrecto.
+          this.showToast('El usuario es inválido');          
+          }
+        });
       }
       else{
         //Si el valor de inicio de sesión es incorrecto.
-        this.showToast('El usuario es inválido');
+        this.showToast('Ha ocurrido un error al logearse.');
       }
     },
     //Si ocurre algún error al tratar de obtener el valor de la variable.

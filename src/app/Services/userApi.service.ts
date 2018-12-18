@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Http, Headers } from "@angular/http";
+import * as ServerResource from '../../providers/server-resource/server-resource';
 
-const API_URL = 'http://localhost:39159/api/User';
+const URL_USER = ServerResource.URL_SERVER + ServerResource.API_USER;
 
 @Injectable()
 export class UserApiService{
@@ -14,6 +15,6 @@ export class UserApiService{
     public logUser(payload: any) {
         let head = new Headers({'Content-type':'application/json'});//Añadimos la cabecera a la petición.
         let _userV = JSON.stringify(payload); //Convertimos el objeto "User" en JSON.
-        return this._http.post(API_URL, _userV,{headers: head}).map(res => res.text())//Realizamos la petición POST, retornamos "Response" (Llamamos .text() para acceder el cuerpo de la respuesta).
+        return this._http.post(URL_USER, _userV,{headers: head}).map(res => res.text())//Realizamos la petición POST, retornamos "Response" (Llamamos .text() para acceder el cuerpo de la respuesta).
     }
 }

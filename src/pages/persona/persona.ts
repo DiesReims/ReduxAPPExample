@@ -5,7 +5,6 @@ import { Persona } from '../../app/Data/Entity/persona';
 import { ControlAlertProvider } from '../../providers/control-alert/control-alert';
 import { PersonaManagerPage } from '../persona-manager/persona-manager';
 import { PersonaServiceProvider } from '../../providers/persona-service/persona-service';
-import { WsPersonaContract } from '../../app/Data/Entity/contracts/wsPersonaContract';
 
 @IonicPage()
 @Component({
@@ -14,23 +13,21 @@ import { WsPersonaContract } from '../../app/Data/Entity/contracts/wsPersonaCont
 })
 export class PersonaPage implements iPage<Persona> {
 
-  BaseEntityList: Persona[];
+  BaseEntityList: Persona[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: ControlAlertProvider, private toastCtrl: ToastController, private personaServ: PersonaServiceProvider) {
     console.log("Constructor por defecto");
-    this.loadData();
   }
 
-  public ionViewDidLoad(){
-    this.loadData();
+  public ionViewDidLoad() {
+    //this.loadData(); Solo mandamos a llamar en el evento de abajo.
   }
-  public ionViewWillEnter(){
+  public ionViewWillEnter() {
     this.loadData();
   }
 
   loadData(): void {
     console.log('Cargando datos del formulario');
-    this.BaseEntityList = [{ Id: 1, StrNombre: 'Diego A.', StrAPaterno: 'Zárate', StrAMaterno: 'Lara', DteFechaNac: new Date, IdNacionalidad: 1, picImage: '' }];
     let resCllBck$ = this.personaServ.getAll();
     resCllBck$.subscribe(data => {
       this.BaseEntityList = data.EntityList;
@@ -46,7 +43,7 @@ export class PersonaPage implements iPage<Persona> {
   }
 
   onUpdateClick(data: Persona): void {
-    alert('Editar con:' + data.StrNombre);
+    this.navCtrl.push(PersonaManagerPage, { objetoEditar: data })
   }
 
   onDeleteClick(data: Persona): void {
@@ -76,6 +73,13 @@ export class PersonaPage implements iPage<Persona> {
       duration: 1500
     });
     toast.present();
+  }
+
+  doRefresh(refresher) {
+    this.loadData();
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
   }
 
 }

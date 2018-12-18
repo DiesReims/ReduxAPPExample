@@ -15,4 +15,12 @@ export interface iPageManager<T> {
     validationData(_Data: T): Boolean;
 
     resetForm(_Data: T, _ResetType: EnumResetForm): void;
+
+    loadDataOnEditMode(_Data: T): void;
+
+    loadTextData(_Data: T): boolean;
+
+    loadOptionsData(_Data: T): boolean;
+
+    loadExtraData(_Data: T): boolean;
 }

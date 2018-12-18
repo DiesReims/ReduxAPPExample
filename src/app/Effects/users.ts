@@ -4,6 +4,7 @@ import { Actions, Effect } from "@ngrx/effects";
 import { Action } from "@ngrx/store";
 import { LOG_USER, logUserOk, logUserError, logUser } from "../Actions/user";
 import { Observable } from "rxjs";
+import { WsUserContract } from "../Data/Entity/contracts/wsUserContract";
 
 @Injectable()
 export class UsersEffects{
@@ -25,7 +26,7 @@ export class UsersEffects{
        //Llamamos el método de nuestro provider encargado de logear al usuario.
        return this._userApiService.logUser(data.payload)
        //Si la solicitud es satisfactoria llamamos  la logUserOk con el usuario retornado.
-       .map(userData => new logUserOk(userData))
+       .map(userData => new logUserOk((JSON.parse(userData).Entity)))
        //Algo fue mal con la solicitud retornamos una acción con el error obtenido.
        .catch(err => Observable.of(new logUserError(err)))
    })
