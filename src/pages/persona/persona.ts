@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { iPage } from '../../app/Data/Interfaces/iPage';
 import { Persona } from '../../app/Data/Entity/persona';
 import { ControlAlertProvider } from '../../providers/control-alert/control-alert';
@@ -14,8 +14,9 @@ import { PersonaServiceProvider } from '../../providers/persona-service/persona-
 export class PersonaPage implements iPage<Persona> {
 
   BaseEntityList: Persona[] = [];
+  loader: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: ControlAlertProvider, private toastCtrl: ToastController, private personaServ: PersonaServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: ControlAlertProvider,private loaderCtrl: LoadingController ,private toastCtrl: ToastController, private personaServ: PersonaServiceProvider) {
     console.log("Constructor por defecto");
   }
 
@@ -23,6 +24,7 @@ export class PersonaPage implements iPage<Persona> {
     //this.loadData(); Solo mandamos a llamar en el evento de abajo.
   }
   public ionViewWillEnter() {
+    this.updateLoader(true);
     this.loadData();
   }
 
@@ -31,6 +33,7 @@ export class PersonaPage implements iPage<Persona> {
     let resCllBck$ = this.personaServ.getAll();
     resCllBck$.subscribe(data => {
       this.BaseEntityList = data.EntityList;
+      this.updateLoader(false);
     },
       _err => {
         this.createToast('Ha ocurrido un error al cargar los datos');
@@ -81,5 +84,23 @@ export class PersonaPage implements iPage<Persona> {
       refresher.complete();
     }, 1000);
   }
+
+  private noDisponible(): void{
+    this.createToast('Esta función no esta disponible.');
+  }
+
+    //Método encargado de actualizar el loader de acuerdo al valor
+    private updateLoader(isLoading: boolean){
+      if (isLoading){
+        //Crea un nuevo loader y lo muestra.
+        this.loader = this.loaderCtrl.create();
+        this.loader.present();
+      }
+      else{
+        if(this.loader){
+          this.loader.dismiss();
+        }
+      }
+    }
 
 }

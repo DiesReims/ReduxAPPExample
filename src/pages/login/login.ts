@@ -32,23 +32,23 @@ export class LoginPage {
     private fB: FormBuilder, //FormBuilder, FormGroup, FormValidators (Para formularios reactivos).
     private _loadingCtrl: LoadingController, //Controladora de loader (Mostrar loaders).
     private _store: Store<State>) //Store (Encargado de guardar todo el estado de la aplicación).
-    {
-      this.loginForm = fB.group({
-        usuario:['',[Validators.required,Validators.maxLength(25)]],
-        password: ['',[Validators.required, Validators.maxLength(25)]]
-      });
-      //Variables del formulario de tipo Observable<T>, se obtienen del Store.
-      this.currentUser$ = _store.select(state => state.users.currentUser);
-      this.isLoading$ = _store.select(state => state.users.isLoading);
-      this.isLogged$ = _store.select(state => state.users.isLogged);
+  {
+    this.loginForm = fB.group({
+      usuario: ['', [Validators.required, Validators.maxLength(25)]],
+      password: ['', [Validators.required, Validators.maxLength(25)]]
+    });
+    //Variables del formulario de tipo Observable<T>, se obtienen del Store.
+    this.currentUser$ = _store.select(state => state.users.currentUser);
+    this.isLoading$ = _store.select(state => state.users.isLoading);
+    this.isLogged$ = _store.select(state => state.users.isLogged);
   }
 
   ionViewDidLoad() {
   }
 
   //Método de login inicial (OBSOLETO)
-  private onLogin(){
-    this.isLoading$.subscribe( val => {
+  private onLogin() {
+    this.isLoading$.subscribe(val => {
       //this.updateLoader(val); TODO: Corregir error ViewCannotFound
     })
     //Cargamos los datos del formulario
@@ -57,67 +57,57 @@ export class LoginPage {
     //Despachamos la acción logUser() encargada de logear los valores del formulario.
     this._store.dispatch(new fromUsersActions.logUser(loginData));
     this.isLogged$.subscribe(data => {
-      if(data){
+      if (data) {
         this.navCtrl.setRoot(HomePage);
       }
-      else{
+      else {
         this.showToast('Usuario Inválido!');
       }
     },
-     err => console.log('Ha ocurrido un error:' + err))
+      err => console.log('Ha ocurrido un error:' + err))
   }
 
   //Método de login actual.
-  private onLogin2(){
-    this.isLoading$.subscribe( val => {
+  private async onLogin2() {
+    this.isLoading$.subscribe(val => {
       //this.updateLoader(val);
       console.log(val); //Verificamos el valor de la variable isLoading$
     })
     const formData = this.loginForm.value; //Obtenemos los valores del formulario.
-    let loginData: User = {Id: 0,StrUsuario: formData.usuario, StrPassword: formData.password,StrToken:'', permisos: []}; //Inicializamos un objeto de tipo User (Interface).
+    let loginData: User = { Id: 0, StrUsuario: formData.usuario, StrPassword: formData.password, StrToken: '', permisos: [] }; //Inicializamos un objeto de tipo User (Interface).
     let contract = new WsUserContract();
     contract.Entity = loginData;
-    this._store.dispatch(new fromUsersActions.logUser(contract));//Despachamos la acción logUser() encargada de logear los valores del formulario.
-    this.isLogged$.finally(()=>{
-      //.finally() es llamado antes del subscribe y se utiliza para ejecutar código después de la llamada.
-    }).subscribe(data => {
-      if(data){
-        this.currentUser$.subscribe(user => {
-          if (user){
-          //Si el valor de isLogged$ es true: Inicio de sesión correcto.
-          this.navCtrl.setRoot(HomePage);
-          }
-          else{
-          //Si el valor de inicio de sesión es incorrecto.
-          this.showToast('El usuario es inválido');          
-          }
-        });
+    await this._store.dispatch(new fromUsersActions.logUser(contract));//Despachamos la acción logUser() encargada de logear los valores del formulario.
+    this.currentUser$.subscribe(user => {
+      if (user) {
+        //Si el valor de isLogged$ es true: Inicio de sesión correcto.
+        this.navCtrl.setRoot(HomePage);
       }
-      else{
+      else {
         //Si el valor de inicio de sesión es incorrecto.
-        this.showToast('Ha ocurrido un error al logearse.');
+        this.showToast('El usuario es inválido.');
       }
     },
-    //Si ocurre algún error al tratar de obtener el valor de la variable.
-     err => console.log('Ha ocurrido un error:' + err));
+    _err => console.log("Ha ocurrido un error: " + _err));
   }
 
+
   //Método encargado de actualizar el loader de acuerdo al valor
-  private updateLoader(isLoading: boolean){
-    if (isLoading){
+  private updateLoader(isLoading: boolean) {
+    if (isLoading) {
       //Crea un nuevo loader y lo muestra.
       this._loader = this._loadingCtrl.create();
       this._loader.present();
     }
-    else{
-      if(this._loader){
+    else {
+      if (this._loader) {
         this._loader.dismiss();
       }
     }
   }
 
   //Método encargado de mostar el toast.
-  private showToast(_text: string){
+  private showToast(_text: string) {
     const tstAlert = this.toastCtrl.create({
       message: _text,
       duration: 1000
@@ -125,7 +115,7 @@ export class LoginPage {
     tstAlert.present();
   }
 
-  private onCancelClicked(){
+  private onCancelClicked() {
     this.loginForm.reset();
   }
 }

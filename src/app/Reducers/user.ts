@@ -53,6 +53,14 @@ export function reducer(_state: State = initialState, _action: fromuserActions.A
             }
         }
 
+        case fromuserActions.LOG_USER_CLOSE: {
+            return {
+                currentUser: null,
+                isLoading: false,
+                isLogged: false
+            }
+        }
+
         default:
         //En caso de que no conozcamos la acción especificada devuelve el mismo estado.
             return _state;

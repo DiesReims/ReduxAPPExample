@@ -17,7 +17,7 @@ export class PersonaServiceProvider implements iService<WsPersonaContract>{
   }
 
   getAll(): Observable<WsPersonaContract> {
-    return this.http.get(URL_PERSONA, { headers: { 'Content-Type': 'application/json', 'tokenSesion': '12345' }}).map(data => data as WsPersonaContract);
+    return this.http.get(URL_PERSONA, { headers: {'Content-Type': 'application/json', 'tokenSesion': '12345' }}).map(data => data as WsPersonaContract);
   }
 
   getById(_Data: WsPersonaContract): Observable<WsPersonaContract> {
@@ -29,11 +29,11 @@ export class PersonaServiceProvider implements iService<WsPersonaContract>{
     .map(data => data as WsPersonaContract);
   }
   PutEntity(_Id: number, _Data: WsPersonaContract): Observable<WsPersonaContract> {
-    return this.http.put(URL_PERSONA + _Id, _Data,{ headers: { 'Content-Type': 'application/json', 'tokenSesion': '12345' }})
+    return this.http.put(URL_PERSONA + _Id, _Data,{ headers: {'Content-Type': 'application/json', 'tokenSesion': '12345' }})
     .map(data => data as WsPersonaContract);
   }
   deleteEntity(_Data: number): Observable<WsPersonaContract> {
-    return this.http.delete(URL_PERSONA + _Data, { headers: { 'Content-Type': 'application/json', 'tokenSesion': '12345' }})
+    return this.http.delete(URL_PERSONA + _Data, { headers: {'Content-Type': 'application/json', 'tokenSesion': '12345' }})
     .map(data => data as WsPersonaContract);
   }
 

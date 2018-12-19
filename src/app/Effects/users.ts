@@ -26,7 +26,14 @@ export class UsersEffects{
        //Llamamos el método de nuestro provider encargado de logear al usuario.
        return this._userApiService.logUser(data.payload)
        //Si la solicitud es satisfactoria llamamos  la logUserOk con el usuario retornado.
-       .map(userData => new logUserOk((JSON.parse(userData).Entity)))
+       .map(userData =>{
+           if ((JSON.parse(userData).StatusCode === 0)){
+            return new logUserOk((JSON.parse(userData).Entity))
+           }
+           else{
+               return new logUserError('El acceso fue inválido');
+           }
+       })
        //Algo fue mal con la solicitud retornamos una acción con el error obtenido.
        .catch(err => Observable.of(new logUserError(err)))
    })

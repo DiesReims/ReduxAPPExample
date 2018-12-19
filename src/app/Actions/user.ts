@@ -5,6 +5,7 @@ import { User } from '../Data/Entity/user';
 export const LOG_USER = 'LOG_USER';
 export const LOG_USER_OK = 'LOG_USER_OK';
 export const LOG_USER_ERROR = 'LOG_USER_ERROR';
+export const LOG_USER_CLOSE = 'LOG_USER_CLOSE';
 
 /*Cada acción tiene su información que tiene 2 propiedades:
 * Tipo: Es el tipo de la acción (Es un String).
@@ -38,7 +39,12 @@ export class logUserError implements Action{
     }
 }
 
+export class logUserClose implements Action{
+    readonly type = LOG_USER_CLOSE; //Tipo
+    constructor (public payload: any){}
+}
+
 /*Exportamos el tipo "Action" que equivale y/o contiene todas las acciones del archivo.
 *Esto es util para el checado de tipos en los reducers.
 */
-export type Action = logUser | logUserOk | logUserError;
+export type Action = logUser | logUserOk | logUserError | logUserClose;
