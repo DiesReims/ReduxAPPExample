@@ -20,6 +20,7 @@ import { PersonaManagerPage } from '../pages/persona-manager/persona-manager';
 import { ControlAlertProvider } from '../providers/control-alert/control-alert';
 import { PersonaServiceProvider } from '../providers/persona-service/persona-service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { PersonaImagePage } from '../pages/persona-image/persona-image';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     ListPage,
     LoginPage,
     PersonaPage,
-    PersonaManagerPage
+    PersonaManagerPage,
+    PersonaImagePage
   ],
   imports: [
     BrowserModule,
@@ -45,7 +47,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     ListPage,
     LoginPage,
     PersonaPage,
-    PersonaManagerPage
+    PersonaManagerPage,
+    PersonaImagePage
   ],
   providers: [
     StatusBar,

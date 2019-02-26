@@ -17,7 +17,8 @@ export class PersonaServiceProvider implements iService<WsPersonaContract>{
   }
 
   getAll(): Observable<WsPersonaContract> {
-    return this.http.get(URL_PERSONA, { headers: {'Content-Type': 'application/json', 'tokenSesion': '12345' }}).map(data => data as WsPersonaContract);
+    return this.http.get(URL_PERSONA, { headers: {'Content-Type': 'application/json', 'tokenSesion': '12345' }})
+    .map(data => data as WsPersonaContract);
   }
 
   getById(_Data: WsPersonaContract): Observable<WsPersonaContract> {

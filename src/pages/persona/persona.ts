@@ -5,6 +5,7 @@ import { Persona } from '../../app/Data/Entity/persona';
 import { ControlAlertProvider } from '../../providers/control-alert/control-alert';
 import { PersonaManagerPage } from '../persona-manager/persona-manager';
 import { PersonaServiceProvider } from '../../providers/persona-service/persona-service';
+import { PersonaImagePage } from '../persona-image/persona-image';
 
 @IonicPage()
 @Component({
@@ -86,7 +87,7 @@ export class PersonaPage implements iPage<Persona> {
   }
 
   private noDisponible(): void{
-    this.createToast('Esta función no esta disponible.');
+    this.navCtrl.push(PersonaImagePage);
   }
 
     //Método encargado de actualizar el loader de acuerdo al valor
